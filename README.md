@@ -146,6 +146,48 @@ inline int A::doA() { return 0; }   // 需要显式内联
 3. 将 inline 函数的的输入参数和返回值映射到调用方法的局部变量空间中； 
 4. 如果 inline 函数有多个返回点，将其转变为 inline 函数代码块末尾的分支（使用 GOTO）。
 
+eg:
+
+```cpp
+/求0-9的平方
+inline int inlineFunc(int num)
+{  
+  if(num>9||num<0)
+	  return -1;  
+  return num*num;  
+}  
+
+int main(int argc,char* argv[])
+{
+	int a=8;
+	int res=inlineFunc(a);
+	cout<<"res:"<<res<<endl;
+}
+```
+
+编译器转换之后：
+
+```cpp
+int main(int argc,char* argv[])
+{
+	int a=8;
+	{  
+	    int _temp_b=8;  
+	    int _temp;  
+	    if (_temp_q >9||_temp_q<0) _temp = -1;  
+	    else _temp =_temp*_temp;  
+	    b = _temp;  
+	}
+}  
+```
+上面例子来源：
+
+>--------------------- 
+>作者：Dablelv 
+>来源：CSDN 
+>原文：https://blog.csdn.net/K346K346/article/details/52065524 
+>版权声明：本文为博主原创文章，转载请附上博文链接！
+
 #### 优缺点
 
 优点
